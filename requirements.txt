@@ -4,3 +4,5 @@ numpy
 matplotlib
 seaborn
 pymongo
+certifi
+##-e .
