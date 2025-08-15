@@ -1,0 +1,21 @@
+2025-08-13 18:53:43,544 - INFO - Initiate the data ingestion
+2025-08-13 18:54:08,766 - INFO - Performed train test split on the dataframe
+2025-08-13 18:54:08,766 - INFO - Exited split_data_as_train_test method of Data_Ingestion class
+2025-08-13 18:54:08,766 - INFO - Exporting train test file path
+2025-08-13 18:54:08,810 - INFO - Exported train test
+2025-08-13 18:54:08,811 - INFO - Data initiation completed
+2025-08-13 18:54:08,832 - INFO - Inintiate the data validation
+2025-08-13 18:54:08,896 - INFO - Required number of columns : 2
+2025-08-13 18:54:08,897 - INFO - Data frame has columns: 31
+2025-08-13 18:54:08,897 - INFO - Required number of columns : 2
+2025-08-13 18:54:08,897 - INFO - Data frame has columns: 31
+2025-08-13 18:54:09,010 - INFO - Data validation completed
+2025-08-13 18:54:09,010 - INFO - data transformation started
+2025-08-13 18:54:09,010 - INFO - Entered initiate_data_transformation of DataTransformation class
+2025-08-13 18:54:09,010 - INFO - Starting data transformation
+2025-08-13 18:54:09,035 - INFO - entered get_data_transformer_object of DataTransformation class
+2025-08-13 18:54:09,035 - INFO - Initialise KNNImputer with {'missing_values': nan, 'n_neighbors': 3, 'weights': 'uniform'}
+2025-08-13 18:54:09,078 - INFO - Entered the save_object method of main_utils
+2025-08-13 18:54:09,083 - INFO - Exited the save_object method of main_utils
+2025-08-13 18:54:09,085 - INFO - data transformation completed
+2025-08-13 18:54:09,085 - INFO - Model Training started

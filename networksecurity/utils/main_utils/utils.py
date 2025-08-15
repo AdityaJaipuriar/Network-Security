@@ -5,6 +5,8 @@ import os,sys
 import numpy as np
 import dill
 import pickle
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import r2_score
 def read_yaml_file(file_path:str)-> dict:
     try:
         with open(file_path,"rb") as yaml_file:
@@ -46,3 +48,56 @@ def save_object(file_path:str,obj:object)->None:
         logging.info("Exited the save_object method of main_utils")
     except Exception as e:
         raise NetworkSecurityException(e,sys)
+    
+def load_object(file_path:str)->object:
+    try:
+        if not os.path.exists(file_path):
+            raise Exception(f"The file: {file_path} does not exists")
+        with open(file_path,"rb") as file_obj:
+            print(file_obj)
+            return pickle.load(file_obj)
+    except Exception as e:
+        raise NetworkSecurityException(e,sys)
+    
+def load_numpy_array_data(file_path:str)->np.array:
+    """
+    load numpy array data from file
+    file_path: str loaction of file to load
+    return: np.array data loaded
+    """
+    try:
+        with open(file_path,"rb") as file_obj:
+            return np.load(file_obj)
+    except Exception as e:
+        raise NetworkSecurityException(e,sys)
+    
+def evaluate_models(x_train, y_train, x_test, y_test, models, param):
+    try:
+        report = {}
+
+        # 💡 Correctly iterate through the dictionary items (key-value pairs)
+        for name, model in models.items():
+            
+            # 💡 Access parameters using the model's string name as the key
+            para = param[name]
+            
+            # 💡 Create and fit GridSearchCV for the current model
+            gs = GridSearchCV(model, para, cv=3)
+            gs.fit(x_train, y_train)
+            
+            # 💡 Use the best_estimator_ from GridSearchCV for predictions
+            best_model = gs.best_estimator_
+
+            y_train_pred = best_model.predict(x_train)
+            train_model_score = r2_score(y_train, y_train_pred)
+
+            y_test_pred = best_model.predict(x_test)
+            test_model_score = r2_score(y_test, y_test_pred)
+
+            # Store the score in the report dictionary
+            report[name] = test_model_score
+        
+        return report
+
+    except Exception as e:
+        raise NetworkSecurityException(e, sys)

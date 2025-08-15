@@ -1,0 +1,25 @@
+2025-08-15 19:05:26,311 - INFO - Initiate the data ingestion
+2025-08-15 19:05:57,793 - INFO - Performed train test split on the dataframe
+2025-08-15 19:05:57,793 - INFO - Exited split_data_as_train_test method of Data_Ingestion class
+2025-08-15 19:05:57,794 - INFO - Exporting train test file path
+2025-08-15 19:05:57,841 - INFO - Exported train test
+2025-08-15 19:05:57,843 - INFO - Data initiation completed
+2025-08-15 19:05:57,847 - INFO - Inintiate the data validation
+2025-08-15 19:05:57,926 - INFO - Required number of columns : 2
+2025-08-15 19:05:57,926 - INFO - Data frame has columns: 31
+2025-08-15 19:05:57,956 - INFO - Required number of columns : 2
+2025-08-15 19:05:57,956 - INFO - Data frame has columns: 31
+2025-08-15 19:05:58,079 - INFO - Data validation completed
+2025-08-15 19:05:58,080 - INFO - data transformation started
+2025-08-15 19:05:58,080 - INFO - Entered initiate_data_transformation of DataTransformation class
+2025-08-15 19:05:58,080 - INFO - Starting data transformation
+2025-08-15 19:05:58,103 - INFO - entered get_data_transformer_object of DataTransformation class
+2025-08-15 19:05:58,103 - INFO - Initialise KNNImputer with {'missing_values': nan, 'n_neighbors': 3, 'weights': 'uniform'}
+2025-08-15 19:05:58,120 - INFO - Entered the save_object method of main_utils
+2025-08-15 19:05:58,121 - INFO - Exited the save_object method of main_utils
+2025-08-15 19:05:58,124 - INFO - data transformation completed
+2025-08-15 19:05:58,124 - INFO - Model Training started
+2025-08-15 19:06:10,760 - INFO - Entered the save_object method of main_utils
+2025-08-15 19:06:10,760 - INFO - Exited the save_object method of main_utils
+2025-08-15 19:06:10,761 - INFO - Model trainer artifact : ModelTrainerArtifact(trained_model_file_path='Artifacts\\15_08_2025_19_05_24\\model_trainer\\trained_model\\model.pkl', train_metric_artifact=ClassificationMetricArtifact(f1_score=0.9916238854363686, precision_score=0.9895739708790221, recall_score=0.9936823104693141), test_metric_artifact=ClassificationMetricArtifact(f1_score=0.9741935483870968, precision_score=0.9695024077046549, recall_score=0.9789303079416531))
+2025-08-15 19:06:10,762 - INFO - Model Training artifact created
