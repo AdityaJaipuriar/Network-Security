@@ -16,6 +16,11 @@ from sklearn.ensemble import AdaBoostClassifier,RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB
 
 from sklearn.model_selection import GridSearchCV
+import mlflow
+
+import dagshub
+dagshub.init(repo_owner='AdityaJaipuriar', repo_name='Network-Security', mlflow=True)
+import joblib
 
 class Modeltrainer:
     def __init__(self,model_trainer_config:ModelTrainerConfig,data_transformation_artifact:DataTransformationArtifact):
@@ -24,6 +29,22 @@ class Modeltrainer:
             self.data_transformation_artifact=data_transformation_artifact
         except Exception as e:
             raise NetworkSecurityException(e,sys)
+        
+    def track_mlflow(self,best_model,classificationmetric):
+        with mlflow.start_run():
+            f1_score = classificationmetric.f1_score
+            precision_score = classificationmetric.precision_score
+            recall_score = classificationmetric.recall_score
+
+            mlflow.log_metric("f1_score",f1_score)
+            mlflow.log_metric("precision_score",precision_score)
+            mlflow.log_metric("recall_score",recall_score)
+            #mlflow.sklearn.log_model(best_model,"model")
+            model_path = "model.joblib"
+            joblib.dump(best_model, model_path)
+            mlflow.log_artifact(model_path, "model")
+            os.remove(model_path)
+
 
     def train_model(self,x_train,y_train,x_test,y_test):
         models = {
@@ -74,7 +95,9 @@ class Modeltrainer:
         classification_train_metric=get_classification_score(y_true=y_train,y_pred=y_train_pred)
         classification_test_metric=get_classification_score(y_true=y_test,y_pred=y_test_pred)
 
-        # Track the MLflow
+        # Track the experiments with MLflow
+        self.track_mlflow(best_model,classification_train_metric)
+        self.track_mlflow(best_model,classification_test_metric)
 
         preprocessor = load_object(file_path=self.data_transformation_artifact.transformed_object_file_path)
 
@@ -83,6 +106,7 @@ class Modeltrainer:
 
         network_model = NetworkModel(preprocessor=preprocessor,model=best_model)
         save_object(self.model_trainer_config.trained_model_file_path,obj=NetworkModel)
+        save_object("final_models/model.pkl",best_model)
 
         #Model Trainer Artifact
         model_trainer_model=ModelTrainerArtifact(trained_model_file_path=self.model_trainer_config.trained_model_file_path,train_metric_artifact=classification_train_metric,test_metric_artifact=classification_test_metric)
